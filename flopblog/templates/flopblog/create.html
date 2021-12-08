@@ -1,0 +1,60 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'style.css' %} " />
+<!-- <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}" /> -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+{% include 'partials/navbar.html'%}
+
+{% block content %}
+
+ <h4 class="py-5"></h4> 
+{%  if error%}
+{{error}}
+{% endif %}
+
+<div class="main" style="margin-top: 150px; margin-left: 600px; background-color: red; width: fit-content;">
+<form class="fw-bold" method="POST" action="{% url 'flopblog:create' %}" enctype="multipart/form-data" style="color: white; width: 18rem">
+{% csrf_token %}
+<h3>MOVIE TITLE</h3>
+<br/>
+<input type="text" name="movietitle" required style="color: black;"/>
+<br/>
+<h3>MOVIE PROS</h3>
+
+<br/> 
+<input type="textbox" name="moviepros" required style="color: black;"/>
+</br>
+<h3>MOVIE CONS</h3>
+
+<br/> 
+<input type="textbox" name="moviecons" required style="color: black;"/>
+</br>
+<h3>OVERALL REVIEW</h3>
+
+<br/> 
+<input type="text" name="overallreview" required style="color: black;"/>        
+<br/> 
+<h3>RATING</h3>
+
+<br/> 
+<input type="number" name="rating" required style="color: black;"/>        
+<br/> 
+<h3>Date</h3>
+
+<br/> 
+<input type="date" name="date" required style="color: black;"/>        
+<br/> 
+
+
+<input  class="btn btn-primary" type="submit" value="AddBlog" style="color: black; background-color: blue;"/>
+
+{% endblock %}
+</form>
+</div>

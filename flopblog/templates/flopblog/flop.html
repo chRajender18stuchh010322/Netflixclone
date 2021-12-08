@@ -1,0 +1,99 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'style.css' %} " />
+<!-- <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}" /> -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+{% include 'partials/navbar.html'%}
+<h1>.</h1>
+{% block content %}
+<div class="main" style="margin-top: 90px">
+  <div class="card" style="background: rgb(39, 34, 34)">
+    <h1
+      style="
+        margin-left: 40pc;
+        background-color: rgb(245, 20, 4);
+        width: fit-content;
+        padding: 5px;
+        font-size: 40px;
+        font-weight: 600;
+      "
+    >
+      Movie Review Blog
+    </h1>
+    {% for Flop in Flop.all %}
+    <div>
+      <!-- <h1 style="font-size: 30px">MOVIE TITLE :</h1> -->
+      <p
+        style="
+          color: rgb(240, 21, 21);
+          font-size: 30px;
+          padding: 5px;
+          margin-left: 45pc;
+          font-weight: 600;
+        "
+      >
+        <br />
+        {{ Flop.movie_title }}
+      </p>
+    </div>
+    <br />
+    <div>
+      <h1 style="font-size: 30px; color: rgb(252, 249, 249)">MOVIE Pro's :</h1>
+      <h1 style="color: #fffdfd; font-size: 20px; padding: 5px">
+        <br />
+        {{ Flop.movie_pros }}
+      </h1>
+    </div>
+    <br />
+    <div>
+      <h1 style="font-size: 30px; color: rgb(252, 249, 249)">MOVIE Con's :</h1>
+      <h1 style="color: rgb(252, 249, 249); font-size: 20px; padding: 5px">
+        <br />
+        {{ Flop.movie_cons }}
+      </h1>
+    </div>
+    <br />
+    <div>
+      <h1 style="font-size: 30px; color: rgb(252, 249, 249)">
+        Movie Overall Review :
+      </h1>
+      <h1 style="color: rgb(255, 254, 254); font-size: 20px; padding: 5px">
+        <br />
+        {{ Flop.overall_review }}
+      </h1>
+    </div>
+    <br />
+    <div>
+      <h1 style="font-size: 30px; color: rgb(252, 249, 249)">Movie Rating:</h1>
+      <h1
+        style="
+          color: rgb(255, 251, 251);
+          font-size: 20px;
+          padding: 5px;
+          background-color: rgb(223, 21, 21);
+          width: fit-content;
+        "
+      >
+        <br />
+        {{ Flop.rating_by_ten }}/10
+      </h1>
+    </div>
+    <br />
+    <div>
+      <h5 style="color: rgb(255, 253, 253); margin-left: 50pc; padding: 5px">
+        {{ Flop.date }}
+      </h5>
+
+      <br /><br /><br />
+    </div>
+
+    {% endfor %} {% endblock%}
+  </div>
+</div>

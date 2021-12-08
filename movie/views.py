@@ -1,0 +1,127 @@
+from django.shortcuts import redirect, render
+from django.views import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from .models import Movie,MovieLinks,Flopblog
+from django.views.generic.dates import YearArchiveView
+from django.views.generic import ListView,DetailView
+
+
+
+
+
+class Index(View):
+    def get(self,request,*args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('movies/home/')
+        return render(request,'index.html')
+
+   
+
+class HomeView(ListView):
+    model = Movie
+    template_name = 'movie/home.html'
+
+
+    def get_context_data(self , **kwargs):
+        context = super(HomeView , self).get_context_data(**kwargs)
+        context['top_rated'] = Movie.objects.filter(status='TR')
+        context['most_watched'] = Movie.objects.filter(status='MW')
+        context['recently_added'] = Movie.objects.filter(status='RA') 
+        return context
+
+
+    def slider_movies(request):
+        movies = Movie.objects.all().order_by('created')
+        return {'slider_movie' : movies}
+ 
+
+# @method_decorator(login_required,name='dispatch')
+class MovieList(ListView):
+    model = Movie
+    paginate_by=5
+
+
+
+
+class MovieDetail(DetailView):
+    model = Movie
+
+
+    def get_object(self):
+        object = super(MovieDetail , self).get_object()
+        object.views_count += 1
+        object.save()
+        return object
+
+    def get_context_data(self , **kwargs):
+        context = super(MovieDetail , self).get_context_data(**kwargs)
+        context['links'] = MovieLinks.objects.filter(movie=self.get_object())
+        context['related_movies'] = Movie.objects.filter(category=self.get_object().category)#.order_by['created'][0:6]
+        return context
+    
+
+
+class MovieCategory(ListView):
+    model = Movie
+    paginate_by = 5
+
+    def get_queryset(self):
+        self.category = self.kwargs['category']
+        return Movie.objects.filter(category=self.category)
+
+    def get_context_data(self , **kwargs):
+        context = super(MovieCategory , self).get_context_data(**kwargs)
+        context['movie_category'] = self.category
+        return context
+
+
+class MovieLanguage(ListView):
+    model = Movie
+    paginate_by = 5
+
+    def get_queryset(self):
+        self.language = self.kwargs['lang']
+        return Movie.objects.filter(language=self.language)
+
+    def get_context_data(self , **kwargs):
+        context = super(MovieLanguage , self).get_context_data(**kwargs)
+        context['movie_language'] = self.language
+        return context
+    
+
+
+
+class MovieSearch(ListView):
+    model = Movie
+    paginate_by = 5
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            object_list = self.model.objects.filter(title__icontains=query)
+        
+        else:
+            object_list = self.model.objects.none()
+
+        return object_list
+
+class MovieYear(YearArchiveView):
+    queryset = Movie.objects.all()
+    date_field = 'year_of_production'
+    make_object_list = True
+    allow_future = True
+
+    print(queryset)
+
+
+# class Create(View):
+#     model=Flopblog
+#     template_name = 'movie/create.html'
+
+   
+
+
+
+
+

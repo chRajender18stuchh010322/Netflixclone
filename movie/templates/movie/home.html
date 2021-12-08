@@ -1,0 +1,182 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'style.css' %} " />
+<!-- <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}" /> -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+{% include 'partials/navbar.html'%}
+<div class="homeslider">
+  <div class="swiper-container"  >
+    <div class="swiper-wrapper">
+      {% for movie in slider_movie %}
+
+      <div class="swiper-slide">
+        <img src="{{ movie.banner.url }}"/>
+
+        <div class="caption">
+          <div class="captioninside">
+            <br>
+            <br>
+            <br>
+            <br><br><br><br>
+            <br>
+            <br>
+            <br>
+            
+            <h3>{{movie.title}}</h3>
+            <p>{{movie.description|slice:'40'}}</p>
+            <a
+            href="{% url 'movies:movie_detail' movie.slug %}"
+            class="playbutton"
+            ></i>More Info</a
+          >
+            <a
+              href=" {{movie.movie_trailer}}"
+              class="playbutton"
+              ><i class="fa fa-play-circle-o"></i>Watch Now</a
+            >
+           
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
+{% block body %}
+
+<main class="content">
+  <section class="panel">
+    <h2>Recently Added</h2>
+    <div class="recentslider">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for movie in recently_added %}
+          
+          <div class="swiper-slide">
+            <a href="{% url 'movies:movie_detail' movie.slug %}">
+              <img
+                src="{{movie.image.url}}"
+                style="height: 280px; width: 800px"
+              />
+              <h3 class="hometitle" style="bottom: 340px">
+                {{movie.title}}
+              </h3></a
+            >
+          </div>
+          {% endfor %}
+          <div class="swiper-slide">
+            <a href="mostwatched.html"
+              ><img src="{% static 'img/others.png' %}"
+            /></a>
+          </div>
+        </div>
+        <div
+          class="nextdirection recent-next"
+          style="top: -400px; background: none; opacity: 4"
+        >
+          <img src="{% static 'img/right-arrow.svg' %}" />
+        </div>
+        <div
+          class="leftdirection recent-prev"
+          style="top: -400px; background: none; opacity: 4"
+        >
+          <img src="{% static 'img/left-arrow.svg' %}" style="height: 100px" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Most Watched</h2>
+    <div class="mostslider">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for movie in most_watched %}
+          <div class="swiper-slide">
+            <a href="{% url 'movies:movie_detail' movie.slug %}">
+              <img
+                src="{{movie.image.url}}"
+                style="height: 280px; width: 800px"
+              />
+              <h3 class="hometitle" style="bottom: 340px">
+                {{movie.title}}
+              </h3></a
+            >
+          </div>
+          {% endfor %}
+          <div class="swiper-slide">
+            <a href="mostwatched.html"
+              ><img src="{% static 'img/others.png' %}"
+            /></a>
+          </div>
+        </div>
+        <div
+          class="nextdirection most-next"
+          style="top: -400px; background: none; opacity: 4"
+        >
+          <img src="{% static 'img/right-arrow.svg' %}" />
+        </div>
+        <div
+          class="leftdirection most-prev"
+          style="top: -400px; background: none; opacity: 4"
+        >
+          <img src="{% static 'img/left-arrow.svg' %}" />
+        </div>
+        <!-- Add Pagination -->
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Top Rated</h2>
+    <div class="topslider">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for movie in top_rated %}
+          <div class="swiper-slide">
+            <a href="{% url 'movies:movie_detail' movie.slug %}">
+              <img
+                src="{{movie.image.url}}"
+                style="height: 280px; width: 800px"
+              />
+              <h3 class="hometitle" style="bottom: 340px">
+                {{movie.title}}
+              </h3></a
+            >
+          </div>
+          {% endfor %}
+          <div class="swiper-slide">
+            <a href="mostwatched.html"
+              ><img src="{% static 'img/others.png' %}"
+            /></a>
+          </div>
+        </div>
+        <div
+          class="nextdirection top-next"
+          style="top: -400px; background: none; opacity: 4"
+        >
+          <img src="{% static 'img/right-arrow.svg' %}" />
+        </div>
+        <div
+          class="leftdirection top-prev"
+          style="top: -400px; background: none; opacity: 4"
+        >
+          <img src="{% static 'img/left-arrow.svg' %}" />
+        </div>
+        <!-- Add Pagination -->
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock body %}
